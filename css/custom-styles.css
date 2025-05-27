@@ -1,0 +1,322 @@
+/* 
+   Estilos personalizados para GSITEC PERU
+   Complementa TailwindCSS con la paleta Tech Blue
+*/
+
+/* Variables CSS para compatibilidad */
+:root {
+    --techblue-50: #eff6ff;
+    --techblue-100: #dbeafe;
+    --techblue-200: #bfdbfe;
+    --techblue-300: #93c5fd;
+    --techblue-400: #60a5fa;
+    --techblue-500: #3b82f6;
+    --techblue-600: #2563eb;
+    --techblue-700: #1d4ed8;
+    --techblue-800: #1e40af;
+    --techblue-900: #1e3a8a;
+    
+    --cyan-400: #22d3ee;
+    --cyan-500: #06b6d4;
+    --cyan-600: #0891b2;
+}
+
+/* Transiciones suaves para modo oscuro */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Estilos para el carrusel de Bootstrap */
+.carousel-inner > .item {
+    display: none;
+    transition: transform 0.6s ease-in-out;
+}
+
+.carousel-inner > .active {
+    display: block;
+}
+
+.carousel-inner > .next,
+.carousel-inner > .prev {
+    display: block;
+}
+
+.carousel-inner > .next {
+    transform: translate3d(100%, 0, 0);
+}
+
+.carousel-inner > .prev {
+    transform: translate3d(-100%, 0, 0);
+}
+
+.carousel-inner > .next.left,
+.carousel-inner > .prev.right {
+    transform: translate3d(0, 0, 0);
+}
+
+.carousel-inner > .active.left {
+    transform: translate3d(-100%, 0, 0);
+}
+
+.carousel-inner > .active.right {
+    transform: translate3d(100%, 0, 0);
+}
+
+/* Indicadores del carrusel */
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    z-index: 15;
+    width: 60%;
+    padding-left: 0;
+    margin-left: -30%;
+    text-align: center;
+    list-style: none;
+}
+
+.carousel-indicators li {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 1px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid transparent;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.carousel-indicators .active {
+    width: 12px;
+    height: 12px;
+    margin: 0;
+    background-color: var(--cyan-400);
+    border-color: var(--cyan-400);
+    transform: scale(1.1);
+}
+
+/* Controles del carrusel */
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #ffffff;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.carousel-control.right {
+    right: 0;
+    left: auto;
+}
+
+.carousel-control:hover,
+.carousel-control:focus {
+    color: #ffffff;
+    text-decoration: none;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.75);
+    transform: scale(1.1);
+}
+
+/* Efectos hover para las tarjetas de productos */
+.product-card {
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Animación para botones */
+.btn-primary {
+    background: linear-gradient(135deg, var(--techblue-600), var(--cyan-500));
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--techblue-700), var(--cyan-600));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+/* Efectos de carga suaves */
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar personalizado para modo oscuro */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(156, 163, 175, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--techblue-500);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--techblue-600);
+}
+
+/* Modo oscuro para scrollbar */
+.dark ::-webkit-scrollbar-track {
+    background: rgba(75, 85, 99, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: var(--techblue-600);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: var(--techblue-500);
+}
+
+/* Estilos para inputs en focus */
+.form-input:focus {
+    ring-width: 2px;
+    ring-color: var(--techblue-500);
+    border-color: transparent;
+}
+
+/* Animación de pulso para notificaciones */
+.pulse-notification {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Gradiente de fondo para hero sections */
+.gradient-bg {
+    background: linear-gradient(135deg, var(--techblue-600), var(--cyan-500));
+}
+
+/* Responsive utilities adicionales */
+@media (max-width: 640px) {
+    .carousel-inner img {
+        height: 200px;
+        object-fit: cover;
+    }
+    
+    .carousel-caption h3 {
+        font-size: 1.25rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 0.875rem;
+    }
+}
+
+/* Estilos para modo de alto contraste */
+@media (prefers-contrast: high) {
+    .bg-techblue-600 {
+        background-color: #1d4ed8 !important;
+    }
+    
+    .text-techblue-600 {
+        color: #1d4ed8 !important;
+    }
+}
+
+/* Reducir movimiento para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Loading spinner personalizado */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--techblue-200);
+    border-top: 4px solid var(--techblue-600);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estilos para tooltips */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--techblue-800);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+}

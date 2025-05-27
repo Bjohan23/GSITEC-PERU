@@ -1,0 +1,10 @@
+:root {
+    --negro: #1f1f1f;
+    --blanco: rgb(230, 230, 230);
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
