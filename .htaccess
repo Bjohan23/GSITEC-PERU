@@ -1,0 +1,37 @@
+# Configuración para redirección automática a index.php
+# Activar el motor de reescritura
+RewriteEngine On
+
+# Redireccionar la raíz del directorio a index.php
+DirectoryIndex index.php
+
+# Redireccionar automáticamente cuando se accede solo al directorio
+RewriteCond %{REQUEST_URI} ^/PAF/?$
+RewriteRule ^(.*)$ index.php [L]
+
+# Redireccionar PAF/php/ al panel de administración
+RewriteCond %{REQUEST_URI} ^/PAF/php/?$
+RewriteRule ^(.*)$ php/panel_admin.php [L]
+
+# Opcional: Redireccionar todas las rutas vacías a index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} ^/?$
+RewriteRule ^(.*)$ index.php [L]
+
+# Configuraciones adicionales de seguridad
+# Denegar acceso a archivos .htaccess
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Denegar acceso a archivos de configuración
+<Files config.php>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Opcional: Configurar páginas de error personalizadas
+# ErrorDocument 404 /PAF/index.php
+# ErrorDocument 403 /PAF/index.php
