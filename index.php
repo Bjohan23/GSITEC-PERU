@@ -1,5 +1,8 @@
 <?php
-session_start();
+// Iniciar sesión solo si no está ya iniciada
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include_once("./config/config.php");
 ?>
 
@@ -48,8 +51,7 @@ include_once("./config/config.php");
     <!-- Font Awesome para iconos -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="./css/custom-styles.css">
+
 </head>
 
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">

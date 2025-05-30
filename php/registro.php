@@ -1,6 +1,12 @@
 <?php
 require_once("../config/config.php");
-session_start();
+// Iniciar sesión solo si no está ya iniciada
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Procesar validación de registro ANTES de enviar cualquier HTML
+include "./valida_registro.php";
 ?>
 <!DOCTYPE html>
 <html lang="es" class="light">
@@ -84,7 +90,6 @@ session_start();
 
             <!-- Registration Form -->
             <div class="bg-white dark:bg-gray-800 py-8 px-6 shadow-xl rounded-xl">
-                <?php include "./valida_registro.php"; ?>
                 
                 <form class="space-y-6" method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"])?>">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1,6 +1,12 @@
 <?php
 require_once("../config/config.php");
-session_start();
+// Iniciar sesión solo si no está ya iniciada
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Procesar validación de inicio de sesión ANTES de enviar cualquier HTML
+include "./valida_inicio_sesion.php";
 ?>
 <!DOCTYPE html>
 <html lang="es" class="light">
@@ -84,8 +90,6 @@ session_start();
 
             <!-- Login Form -->
             <div class="bg-white dark:bg-gray-800 py-8 px-6 shadow-xl rounded-xl">
-                <?php include "./valida_inicio_sesion.php"; ?>
-                
                 <form class="space-y-6" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <!-- Username Field -->
                     <div>
@@ -103,14 +107,14 @@ session_start();
                                 name="nombre" 
                                 id="nombre"
                                 autocomplete="username"
-                                value="<?= isset($nombre) ? $nombre : '' ?>"
+                                value="<?= isset($nombre) ? htmlspecialchars($nombre) : '' ?>"
                                 class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-techblue-500 focus:border-transparent transition-colors duration-200"
                                 placeholder="Ingresa tu nombre de usuario"
                             >
                         </div>
                         <?php if(isset($nombreErr) && $nombreErr): ?>
                             <p class="mt-2 text-sm text-red-600 dark:text-red-400">
-                                <?php echo $nombreErr; ?>
+                                <?php echo htmlspecialchars($nombreErr); ?>
                             </p>
                         <?php endif; ?>
                     </div>
@@ -131,14 +135,14 @@ session_start();
                                 name="contrasena" 
                                 id="contrasena"
                                 autocomplete="current-password"
-                                value="<?= isset($contra) ? $contra : '' ?>"
+                                value="<?= isset($contra) ? htmlspecialchars($contra) : '' ?>"
                                 class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-techblue-500 focus:border-transparent transition-colors duration-200"
                                 placeholder="Ingresa tu contraseña"
                             >
                         </div>
                         <?php if(isset($contraErr) && $contraErr): ?>
                             <p class="mt-2 text-sm text-red-600 dark:text-red-400">
-                                <?php echo $contraErr; ?>
+                                <?php echo htmlspecialchars($contraErr); ?>
                             </p>
                         <?php endif; ?>
                     </div>
