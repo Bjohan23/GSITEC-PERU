@@ -73,6 +73,7 @@ include_once("./config/config.php");
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="#" class="text-white hover:text-cyan-400 transition-colors duration-200">Lista de productos</a>
                     
+                    <a href="<?= BASE_URL ?>php/panel_admin.php" class="text-white hover:text-cyan-400 transition-colors duration-200">administrador</a>
                     <!-- Dark Mode Toggle -->
                     <button onclick="toggleDarkMode()" class="text-white hover:text-cyan-400 transition-colors duration-200 p-2 rounded-lg">
                         <svg class="w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 20 20">
