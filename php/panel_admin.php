@@ -249,6 +249,10 @@ if (!mysqli_connect_errno()) {
                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 block text-center">
                             📦 Ver Todos los Productos
                         </a>
+                        <a href="./categorias_admin.php" 
+                           class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 block text-center">
+                            🏷️ Gestionar Categorías
+                        </a>
                         <a href="./agregar_producto.php" 
                            class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 block text-center">
                             ➕ Agregar Nuevo Producto

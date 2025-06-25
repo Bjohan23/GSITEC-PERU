@@ -43,6 +43,27 @@ include_once("./config/config.php");
                 }
             }
         }
+        
+        // Cargar preferencia de modo oscuro (por defecto claro)
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkMode = localStorage.getItem('darkMode');
+            if (darkMode === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+        });
+
+        // Smooth scrolling para enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     </script>
     <!-- Bootstrap solo para JavaScript del carrusel -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -242,6 +263,35 @@ include_once("./config/config.php");
             </p>
         </div>
     </div>
+    
+    <!-- Categories Filter -->
+    <div class="bg-gray-100 dark:bg-gray-800 py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="filtrarCategoria('')" 
+                        class="categoria-btn px-4 py-2 rounded-full transition-all duration-200 bg-techblue-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105" 
+                        data-categoria="">
+                    🔍 Todas las categorías
+                </button>
+                <?php
+                // Obtener categorías activas
+                $con_cat = mysqli_connect($db_hostname, $db_username, $db_password, $db_name);
+                if (!mysqli_connect_errno()) {
+                    $result_cat = mysqli_query($con_cat, "SELECT * FROM categorias WHERE activa = 1 ORDER BY orden_visualizacion");
+                    while ($cat = mysqli_fetch_array($result_cat)) {
+                        echo '<button onclick="filtrarCategoria(\'' . htmlspecialchars($cat['nombre_categoria']) . '\')" ';
+                        echo 'class="categoria-btn px-4 py-2 rounded-full transition-all duration-200 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 shadow-md hover:shadow-lg transform hover:scale-105" ';
+                        echo 'data-categoria="' . htmlspecialchars($cat['nombre_categoria']) . '" ';
+                        echo 'style="border: 2px solid ' . htmlspecialchars($cat['color_categoria']) . ';">';
+                        echo htmlspecialchars($cat['icono_categoria']) . ' ' . ucfirst(htmlspecialchars($cat['nombre_categoria']));
+                        echo '</button>';
+                    }
+                    mysqli_close($con_cat);
+                }
+                ?>
+            </div>
+        </div>
+    </div>
 
     <!-- Products Grid -->
     <main class="py-8 bg-gray-50 dark:bg-gray-900">
@@ -267,7 +317,8 @@ include_once("./config/config.php");
                         $productos_mostrados++;
                         ?>
                         <!-- Product Card -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group product-card fade-in">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group product-card fade-in" 
+                             data-categoria="<?= htmlspecialchars($row['categoria']) ?>">
                             <div class="relative overflow-hidden">
                                 <img 
                                     class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" 
@@ -373,26 +424,68 @@ include_once("./config/config.php");
             mobileMenu.classList.toggle('hidden');
         }
 
-        // Cargar preferencia de modo oscuro (por defecto claro)
-        document.addEventListener('DOMContentLoaded', function() {
-            const darkMode = localStorage.getItem('darkMode');
-            if (darkMode === 'true') {
-                document.documentElement.classList.add('dark');
-            }
-        });
-
-        // Smooth scrolling para enlaces
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+        // Filtrado por categorías
+        function filtrarCategoria(categoria) {
+            const productos = document.querySelectorAll('.product-card');
+            const botones = document.querySelectorAll('.categoria-btn');
+            
+            // Actualizar estilos de botones
+            botones.forEach(btn => {
+                if (btn.dataset.categoria === categoria) {
+                    btn.classList.remove('bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    btn.classList.add('bg-techblue-600', 'text-white');
+                } else {
+                    btn.classList.remove('bg-techblue-600', 'text-white');
+                    btn.classList.add('bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
                 }
             });
-        });
+            
+            // Filtrar productos
+            productos.forEach(producto => {
+                if (categoria === '' || producto.dataset.categoria === categoria) {
+                    producto.style.display = 'block';
+                    producto.classList.add('fade-in');
+                } else {
+                    producto.style.display = 'none';
+                    producto.classList.remove('fade-in');
+                }
+            });
+            
+            // Mostrar mensaje si no hay productos
+            const productosVisibles = document.querySelectorAll('.product-card[style*="block"], .product-card:not([style*="none"])');
+            
+            if (categoria !== '' && productosVisibles.length === 0) {
+                // Crear mensaje temporal si no existe
+                let mensaje = document.getElementById('no-productos-mensaje');
+                if (!mensaje) {
+                    mensaje = document.createElement('div');
+                    mensaje.id = 'no-productos-mensaje';
+                    mensaje.className = 'col-span-full text-center py-12';
+                    mensaje.innerHTML = `
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 max-w-md mx-auto">
+                            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM10 12a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                                No hay productos en esta categoría
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                Prueba seleccionando otra categoría
+                            </p>
+                        </div>
+                    `;
+                    document.querySelector('.grid.grid-cols-1.sm\\:grid-cols-2').appendChild(mensaje);
+                }
+                mensaje.style.display = 'block';
+            } else {
+                const mensaje = document.getElementById('no-productos-mensaje');
+                if (mensaje) {
+                    mensaje.style.display = 'none';
+                }
+            }
+        }
     </script>
 
     <!-- Custom Bootstrap Carousel CSS -->
