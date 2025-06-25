@@ -280,9 +280,13 @@ if (!mysqli_connect_errno()) {
                            class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 block text-center">
                             📊 Historial de Ventas
                         </a>
+                        <a href="./reportes_avanzados.php" 
+                           class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 block text-center">
+                            📈 Analytics Avanzados
+                        </a>
                         <a href="./reportes_ventas.php" 
                            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 block text-center">
-                            📈 Reportes y Estadísticas
+                            📅 Reportes Básicos
                         </a>
                     </div>
                 </div>
