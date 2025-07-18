@@ -1,0 +1,156 @@
+# ============================================================================
+# .gitignore para Proyecto PAF - Tienda Online (PHP/XAMPP)
+# ============================================================================
+
+# Archivos de configuración sensibles
+config/config.php
+*.env
+.env.local
+.env.production
+
+# Archivos de base de datos
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+backup/*.sql
+backup/tienda_online_backup_completo.sql
+
+# Archivos de sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Archivos temporales de Windows
+~$*
+
+# Archivos de logs
+*.log
+logs/
+error.log
+access.log
+
+# Archivos de cache de PHP
+*.cache
+cache/
+tmp/
+temp/
+
+# Archivos de sesión de PHP
+sessions/
+sess_*
+
+# Archivos de uploads/subidas (opcional - descomenta si no quieres versionar uploads)
+# uploads/
+# img/productos/
+
+# Archivos de vendor (si usas Composer)
+vendor/
+composer.lock
+
+# Archivos de Node.js (si usas npm)
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Archivos de desarrollo
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos de certificados SSL
+*.pem
+*.key
+*.crt
+*.cer
+*.pfx
+
+# Archivos de backup automáticos
+*.bak
+*.backup
+*.old
+*.orig
+
+# Archivos de Cloudflare Tunnel
+cloudflared.exe
+cloudflared
+*.cloudflared
+
+# Archivos de configuración de servidor
+.htaccess.bak
+httpd.conf.bak
+php.ini.bak
+
+# Archivos de dependencias de desarrollo
+.phpunit.result.cache
+phpunit.xml
+.phpcs.xml
+.phpmd.xml
+
+# Archivos de debug
+xdebug.log
+error_log
+php_errors.log
+
+# Archivos de análisis de código
+.sonarqube/
+.scannerwork/
+
+# Archivos de documentación generada
+docs/build/
+docs/_build/
+
+# Archivos de pruebas y testing
+tests/coverage/
+coverage/
+.coverage
+coverage.xml
+
+# Archivos de configuración local específicos
+local_config.php
+dev_config.php
+test_config.php
+
+# Archivos de minificación
+*.min.js
+*.min.css
+*.map
+
+# Archivos de plugins/extensiones temporales
+plugins/temp/
+extensions/temp/
+
+# Archivos de sistema de control de versiones
+.git/
+.svn/
+.hg/
+
+# Archivos de despliegue
+deploy.sh
+deploy.bat
+.deployment
+.deploy
+
+# Archivos de monitoreo
+monitoring/
+stats/
+analytics/
+
+# Archivos de configuración de IDE específicos
+.vscode/settings.json
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+
+# Archivos de configuración de servidor web
+apache.conf
+nginx.conf
+.htpasswd

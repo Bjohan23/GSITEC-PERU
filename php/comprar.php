@@ -41,5 +41,5 @@ else:
     }
 
     mysqli_close($con);
-    header('Location: ./historial_individual.php');
+    header('Location: ./generar_boleta.php');
 endif;

@@ -37,34 +37,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nombreErr = "Error de conexión a la base de datos";
             $hay_errores = true;
         } else {
-            // Obtener datos del usuario
-            $stmt = mysqli_prepare($con, "SELECT id_usuario, super_usuario, nombre_usuario FROM usuario WHERE nombre_usuario = ? AND contrasena = ?");
-            mysqli_stmt_bind_param($stmt, "ss", $nombre, $contra);
+            // Obtener datos del usuario (incluir contraseña hasheada para verificar)
+            $stmt = mysqli_prepare($con, "SELECT id_usuario, super_usuario, nombre_usuario, contrasena FROM usuario WHERE nombre_usuario = ?");
+            mysqli_stmt_bind_param($stmt, "s", $nombre);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
             
             if ($row = mysqli_fetch_array($result)) {
-                $id = $row['id_usuario'];
-                $super = $row['super_usuario'];
-                $nombre_usuario = $row['nombre_usuario'];
-                
-                // Iniciar sesión solo si no está ya iniciada
-                if (session_status() == PHP_SESSION_NONE) {
-                    session_start();
+                // Verificar contraseña hasheada
+                if (password_verify($contra, $row['contrasena'])) {
+                    $id = $row['id_usuario'];
+                    $super = $row['super_usuario'];
+                    $nombre_usuario = $row['nombre_usuario'];
+                    
+                    // Iniciar sesión solo si no está ya iniciada
+                    if (session_status() == PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    
+                    // Crear sesión de usuario
+                    $_SESSION['sesion_personal'] = array();
+                    $_SESSION['sesion_personal']['id'] = $id;
+                    $_SESSION['sesion_personal']['super'] = $super;
+                    $_SESSION['sesion_personal']['nombre'] = $nombre_usuario;
+                    
+                    // Cerrar conexión
+                    mysqli_close($con);
+                    
+                    // Redirigir a index
+                    header("Location: ../index.php");
+                    exit();
+                } else {
+                    $nombreErr = "Usuario o contraseña incorrectos";
+                    $hay_errores = true;
                 }
-                
-                // Crear sesión de usuario
-                $_SESSION['sesion_personal'] = array();
-                $_SESSION['sesion_personal']['id'] = $id;
-                $_SESSION['sesion_personal']['super'] = $super;
-                $_SESSION['sesion_personal']['nombre'] = $nombre_usuario;
-                
-                // Cerrar conexión
-                mysqli_close($con);
-                
-                // Redirigir a index
-                header("Location: ../index.php");
-                exit();
             } else {
                 $nombreErr = "Usuario o contraseña incorrectos";
                 $hay_errores = true;

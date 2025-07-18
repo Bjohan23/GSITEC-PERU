@@ -268,7 +268,7 @@ $total = $subtotal + $envio + $impuestos;
                                         <div>
                                             <span class="text-gray-600 dark:text-gray-400">Precio unitario:</span>
                                             <p class="font-semibold text-gray-900 dark:text-white">
-                                                $<?= number_format(floatval($value['precio']), 2, '.', ',') ?>
+                                                S/ <?= number_format(floatval($value['precio']), 2, '.', ',') ?>
                                             </p>
                                         </div>
                                         <div>
@@ -280,7 +280,7 @@ $total = $subtotal + $envio + $impuestos;
                                         <div class="md:col-span-2">
                                             <span class="text-gray-600 dark:text-gray-400">Subtotal:</span>
                                             <p class="font-bold text-lg text-green-600 dark:text-green-400">
-                                                $<?= number_format(floatval($value['cantidad'] * floatval($value['precio'])), 2, '.', ',') ?>
+                                                S/ <?= number_format(floatval($value['cantidad'] * floatval($value['precio'])), 2, '.', ',') ?>
                                             </p>
                                         </div>
                                     </div>
@@ -303,26 +303,26 @@ $total = $subtotal + $envio + $impuestos;
                         <div class="flex justify-between">
                             <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
                             <span class="text-gray-900 dark:text-white font-medium">
-                                $<?= number_format(floatval($subtotal), 2, '.', ',') ?>
+                                S/ <?= number_format(floatval($subtotal), 2, '.', ',') ?>
                             </span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600 dark:text-gray-400">Envío</span>
                             <span class="<?= $envio == 0 ? 'text-green-600 dark:text-green-400' : 'text-gray-900 dark:text-white' ?> font-medium">
-                                <?= $envio == 0 ? 'GRATIS' : '$' . number_format($envio, 2, '.', ',') ?>
+                                <?= $envio == 0 ? 'GRATIS' : 'S/ ' . number_format($envio, 2, '.', ',') ?>
                             </span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600 dark:text-gray-400">Impuestos (18%)</span>
                             <span class="text-gray-900 dark:text-white font-medium">
-                                $<?= number_format(floatval($impuestos), 2, '.', ',') ?>
+                                S/ <?= number_format(floatval($impuestos), 2, '.', ',') ?>
                             </span>
                         </div>
                         <hr class="border-gray-200 dark:border-gray-600">
                         <div class="flex justify-between">
                             <span class="text-lg font-bold text-gray-900 dark:text-white">Total</span>
                             <span class="text-2xl font-bold text-techblue-600 dark:text-techblue-400">
-                                $<?= number_format(floatval($total), 2, '.', ',') ?>
+                                S/ <?= number_format(floatval($total), 2, '.', ',') ?>
                             </span>
                         </div>
                     </div>
@@ -376,7 +376,7 @@ $total = $subtotal + $envio + $impuestos;
                             <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
-                            Confirmar Compra
+                            Confirmar Compra y Generar Boleta
                         </button>
                         
                         <button 

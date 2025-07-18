@@ -77,8 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Verificar una vez más que no hay administradores
             if (!hayAdministradores()) {
+                // Hashear la contraseña
+                $contra_hash = password_hash($contra, PASSWORD_DEFAULT);
+                
                 $stmt = mysqli_prepare($con, "INSERT INTO administradores (nombre_usuario, correo, contrasena, nivel_admin) VALUES (?, ?, ?, 2)");
-                mysqli_stmt_bind_param($stmt, "sss", $nombre, $correo, $contra);
+                mysqli_stmt_bind_param($stmt, "sss", $nombre, $correo, $contra_hash);
                 
                 if (mysqli_stmt_execute($stmt)) {
                     mysqli_close($con);

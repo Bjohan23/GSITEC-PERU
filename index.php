@@ -340,7 +340,7 @@ include_once("./config/config.php");
                                 
                                 <div class="border-t border-gray-200 dark:border-gray-600 pt-4">
                                     <p class="text-2xl font-bold text-techblue-600 dark:text-techblue-400 text-center mb-4">
-                                        $<?= number_format(floatval($row['precio_producto']), 2, '.', ',') ?>
+                                        S/ <?= number_format(floatval($row['precio_producto']), 2, '.', ',') ?>
                                     </p>
                                     
                                     <?php if (isset($_SESSION['sesion_personal'])): ?>

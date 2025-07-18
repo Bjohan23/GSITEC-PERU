@@ -32,6 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hay_errores = true;
     } else {
         $contra = test_input($_POST["contrasena"]);
+        // Hashear la contraseña
+        $contra_hash = password_hash($contra, PASSWORD_DEFAULT);
     }
     
     date_default_timezone_set("America/Mexico_City");
@@ -85,12 +87,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 // Registrar usuario
                 $stmt = mysqli_prepare($con, "INSERT INTO usuario (nombre_usuario, fecha_nacimiento, correo, contrasena, numero_tarjeta, direccion) VALUES (?, ?, ?, ?, ?, ?)");
-                mysqli_stmt_bind_param($stmt, "ssssss", $nombre, $fechanacimiento, $correo, $contra, $ntarjeta, $address);
+                mysqli_stmt_bind_param($stmt, "ssssss", $nombre, $fechanacimiento, $correo, $contra_hash, $ntarjeta, $address);
                 
                 if (mysqli_stmt_execute($stmt)) {
                     // Obtener datos del usuario recién creado
-                    $stmt2 = mysqli_prepare($con, "SELECT id_usuario, super_usuario, nombre_usuario FROM usuario WHERE nombre_usuario = ? AND contrasena = ?");
-                    mysqli_stmt_bind_param($stmt2, "ss", $nombre, $contra);
+                    $stmt2 = mysqli_prepare($con, "SELECT id_usuario, super_usuario, nombre_usuario FROM usuario WHERE nombre_usuario = ?");
+                    mysqli_stmt_bind_param($stmt2, "s", $nombre);
                     mysqli_stmt_execute($stmt2);
                     $result2 = mysqli_stmt_get_result($stmt2);
                     

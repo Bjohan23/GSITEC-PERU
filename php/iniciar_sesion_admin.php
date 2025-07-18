@@ -58,30 +58,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nombreErr = "Error de conexión a la base de datos";
             $hay_errores = true;
         } else {
-            $stmt = mysqli_prepare($con, "SELECT id_administrador, nivel_admin, nombre_usuario FROM administradores WHERE (nombre_usuario = ? OR correo = ?) AND contrasena = ? AND activo = 1");
-            mysqli_stmt_bind_param($stmt, "sss", $nombre, $nombre, $contra);
+            $stmt = mysqli_prepare($con, "SELECT id_administrador, nivel_admin, nombre_usuario, contrasena FROM administradores WHERE (nombre_usuario = ? OR correo = ?) AND activo = 1");
+            mysqli_stmt_bind_param($stmt, "ss", $nombre, $nombre);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
             
             if ($row = mysqli_fetch_array($result)) {
-                $id = $row['id_administrador'];
-                $nivel = $row['nivel_admin'];
-                $nombre_usuario = $row['nombre_usuario'];
-                
-                // Actualizar último acceso
-                $stmt_update = mysqli_prepare($con, "UPDATE administradores SET ultimo_acceso = CURRENT_TIMESTAMP WHERE id_administrador = ?");
-                mysqli_stmt_bind_param($stmt_update, "i", $id);
-                mysqli_stmt_execute($stmt_update);
-                
-                // Crear sesión de administrador
-                $_SESSION['sesion_admin'] = array();
-                $_SESSION['sesion_admin']['id'] = $id;
-                $_SESSION['sesion_admin']['nivel'] = $nivel;
-                $_SESSION['sesion_admin']['nombre'] = $nombre_usuario;
-                
-                mysqli_close($con);
-                header("Location: ./panel_admin.php");
-                exit();
+                // Verificar contraseña hasheada
+                if (password_verify($contra, $row['contrasena'])) {
+                    $id = $row['id_administrador'];
+                    $nivel = $row['nivel_admin'];
+                    $nombre_usuario = $row['nombre_usuario'];
+                    
+                    // Actualizar último acceso
+                    $stmt_update = mysqli_prepare($con, "UPDATE administradores SET ultimo_acceso = CURRENT_TIMESTAMP WHERE id_administrador = ?");
+                    mysqli_stmt_bind_param($stmt_update, "i", $id);
+                    mysqli_stmt_execute($stmt_update);
+                    
+                    // Crear sesión de administrador
+                    $_SESSION['sesion_admin'] = array();
+                    $_SESSION['sesion_admin']['id'] = $id;
+                    $_SESSION['sesion_admin']['nivel'] = $nivel;
+                    $_SESSION['sesion_admin']['nombre'] = $nombre_usuario;
+                    
+                    mysqli_close($con);
+                    header("Location: ./panel_admin.php");
+                    exit();
+                } else {
+                    $nombreErr = "Credenciales incorrectas o cuenta inactiva";
+                    $hay_errores = true;
+                }
             } else {
                 $nombreErr = "Credenciales incorrectas o cuenta inactiva";
                 $hay_errores = true;
